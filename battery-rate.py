@@ -15,14 +15,17 @@ from gi.repository import Gtk, AppIndicator3, GObject
 import time
 from threading import Thread
 
+# This works for my E14 G4
 POWER_CMD = "cat /sys/class/power_supply/BAT0/power_now"
+# Icon names can be infered from the files in /usr/share/icons
+# find  /usr/share/icons -type f -name "*.png" 
 ICON = "gnome-power-manager-symbolic"
 
 class Indicator():
     def __init__(self):
         self.app = "Battery Power" 
         self.indicator = AppIndicator3.Indicator.new(
-            self.app, "gnome-power-manager-symbolic",
+            self.app, ICON,
             AppIndicator3.IndicatorCategory.OTHER)
         self.indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)       
         self.indicator.set_menu(self.create_menu())
@@ -47,7 +50,7 @@ class Indicator():
         interval_s = 2
         while True:
             time.sleep(interval_s)
-            mention = f"{self.get_power():0.2} W"
+            mention = f"{self.get_power():2.1f} W"
             # apply the interface update using  GObject.idle_add()
             GObject.idle_add(
                 self.indicator.set_label,
