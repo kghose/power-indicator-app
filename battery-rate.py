@@ -11,7 +11,8 @@ import signal
 import subprocess
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, AppIndicator3, GObject
+gi.require_version('AppIndicator3', '0.1')
+from gi.repository import Gtk, GLib, AppIndicator3, GObject
 import time
 from threading import Thread
 
@@ -33,13 +34,13 @@ class Indicator():
         # the thread:
         self.update = Thread(target=self.show_power)
         # daemonize the thread to make the indicator stopable
-        self.update.setDaemon(True)
+        self.daemon = True
         self.update.start()
 
     def create_menu(self):
         menu = Gtk.Menu()
         # quit
-        item_quit = Gtk.MenuItem('Quit')
+        item_quit = Gtk.MenuItem(label='Quit')
         item_quit.connect('activate', self.stop)
         menu.append(item_quit)
 
@@ -52,10 +53,10 @@ class Indicator():
             time.sleep(interval_s)
             mention = f"{self.get_power():2.1f} W"
             # apply the interface update using  GObject.idle_add()
-            GObject.idle_add(
+            GLib.idle_add(
                 self.indicator.set_label,
                 mention, self.app,
-                priority=GObject.PRIORITY_DEFAULT
+                priority=GLib.PRIORITY_DEFAULT
                 )
 
     def get_power(self):
@@ -67,6 +68,5 @@ class Indicator():
 
 Indicator()
 # this is where we call GObject.threads_init()
-GObject.threads_init()
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 Gtk.main()
