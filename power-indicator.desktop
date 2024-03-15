@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Battery Power
+Comment=Shows battery power draw in task bar
+Exec=/home/kghose/Coding/power-indicator-app/battery-rate.py
+Terminal=false
+Categories=utility;power
