@@ -8,9 +8,9 @@ periodically and using that as the text of the indicator. It is based on
 [this example][2].
 
 Copy the indicator app (`battery-rate.py`) somewhere (e.g. "`/my/path`") and 
-copy the desktop file (`power-indicator.desktop`) to 
-`~/.local/share/applications` after changing the `Exec` entry to whatever 
-"`/my/path`" is. [See this for details][3].
+copy the desktop file (`power-indicator.desktop`) to `~/.config/autostart/` 
+after changing the `Exec` entry to whatever "`/my/path`" is. [See this for 
+details][3].
 
 You will need `appindicator` installed e.g. `sudo apt-get install 
 gir1.2-appindicator3-0.1`. In Ubuntu this is enough to get things going.
