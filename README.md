@@ -1,5 +1,20 @@
 # Battery power panel indicator 
 
+**NOTE: I've deprecated this after discovering the superb [argos] meta shell 
+extension.** I now use the following script, placed in 
+`.config/argos/battery-rate.3s.sh`:
+
+```
+#!/usr/bin/env bash
+
+RATE=$(echo "scale=2;`cat /sys/class/power_supply/BAT0/power_now`/1000000.0" | bc --)
+echo "${RATE}W | iconName=gnome-power-manager-symbolic"
+echo "---"
+```
+
+[argos]: https://github.com/p-e-w/argos
+
+
 ![](screenshot.png)
 
 This is a very simple [Application Panel Indicator][1]. It shows the current
